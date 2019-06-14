@@ -23,7 +23,7 @@ struct proc_info
 
 class proc_manager
 {
-	typedef std::unordered_map<pid_t, sptr<proc_info>> proc_map_t;
+	typedef std::unordered_map<pid_t, std::shared_ptr<proc_info>> proc_map_t;
 
 	proc_map_t m_proc_map;
 
@@ -33,7 +33,7 @@ public:
 	pid_t start(sptr_cstr comm);
 	bool stop(pid_t);
 	void stop_all();
-	sptr<proc_info> get_info(pid_t);
+    std::shared_ptr<proc_info> get_info(pid_t);
 
 private:
 	bool stop_without_lock(pid_t);

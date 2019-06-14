@@ -15,7 +15,7 @@ pid_t proc_manager::start(sptr_cstr comm)
 
 	pid_t pid = util::exec_command(*comm);
 
-	m_proc_map.insert(std::make_pair(pid, sptr<proc_info>(new proc_info(pid, comm))));
+	m_proc_map.insert(std::make_pair(pid, std::shared_ptr<proc_info>(new proc_info(pid, comm))));
 
 	return pid;
 }	
@@ -37,7 +37,7 @@ void proc_manager::stop_all()
 	for (auto& proc_pr : m_proc_map) stop(proc_pr.first);
 }
 
-sptr<proc_info> proc_manager::get_info(pid_t pid)
+std::shared_ptr<proc_info> proc_manager::get_info(pid_t pid)
 {
 	return m_proc_map[pid];
 }
